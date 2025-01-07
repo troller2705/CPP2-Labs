@@ -11,13 +11,13 @@ public class Player : MonoBehaviour
     public float crouchSpeed = 2.5f;
     public float jumpForce = 5.0f;
     public float mouseSensitivity = 2.0f;
+    [SerializeField]
+    private float currentSpeed;
 
     [Header("Crouch Settings")]
     public float crouchHeight = 1.0f;
     private float originalHeight;
 
-    [SerializeField]
-    private float currentSpeed;
     private float rotationX = 0f;
 
     public Transform cameraTransform;
