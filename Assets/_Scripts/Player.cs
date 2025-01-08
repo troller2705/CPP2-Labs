@@ -201,7 +201,7 @@ public class Player : MonoBehaviour
 
     public void OnSprint(InputValue value)
     {
-        isSprinting = value.isPressed;
+        isSprinting = !isSprinting;
     }
 
     public void OnCrouch(InputValue value)
