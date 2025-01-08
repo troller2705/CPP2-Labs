@@ -1,8 +1,20 @@
+using System.Net.Mail;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Bear : MonoBehaviour
 {
+    public enum Type { Patrol, Gather, Sleep }
+
+    [System.Serializable]
+    public class PatrolPoint
+    {
+        public string pointName;
+        public Transform point;
+        public Type patrolType;
+        public float holdTime;
+    }
+
     [Header("Enemy Settings")]
     public float patrolSpeed = 2f;
     public float chaseSpeed = 4f;
@@ -11,7 +23,7 @@ public class Bear : MonoBehaviour
     public float attackCooldown = 2f;
 
     [Header("Patrol Settings")]
-    public Transform[] patrolPoints;
+    public PatrolPoint[] patrolPoints;
     private int currentPatrolIndex = 0;
 
     private Transform player;
@@ -33,7 +45,7 @@ public class Bear : MonoBehaviour
         {
             currentState = State.Patrolling;
             agent.speed = patrolSpeed;
-            agent.SetDestination(patrolPoints[currentPatrolIndex].position);
+            agent.SetDestination(patrolPoints[currentPatrolIndex].point.position);
             UpdateAnimation();
         }
     }
@@ -76,7 +88,7 @@ public class Bear : MonoBehaviour
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
-            agent.SetDestination(patrolPoints[currentPatrolIndex].position);
+            agent.SetDestination(patrolPoints[currentPatrolIndex].point.position);
         }
     }
 
@@ -151,7 +163,7 @@ public class Bear : MonoBehaviour
             case State.Patrolling:
                 agent.isStopped = false;
                 agent.speed = patrolSpeed;
-                agent.SetDestination(patrolPoints[currentPatrolIndex].position);
+                agent.SetDestination(patrolPoints[currentPatrolIndex].point.position);
                 break;
             case State.Chasing:
                 agent.isStopped = false;

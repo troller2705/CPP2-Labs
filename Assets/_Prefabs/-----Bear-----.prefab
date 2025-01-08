@@ -283,11 +283,26 @@ MonoBehaviour:
   attackRange: 2
   attackCooldown: 2
   patrolPoints:
-  - {fileID: 3671250680151661911}
-  - {fileID: 1653413300711476815}
-  - {fileID: 5175290951189782320}
-  - {fileID: 4317672255523598360}
-  - {fileID: 3257072839462100019}
+  - pointName: Start
+    point: {fileID: 3671250680151661911}
+    patrolType: 0
+    holdTime: 0
+  - pointName: 
+    point: {fileID: 1653413300711476815}
+    patrolType: 0
+    holdTime: 0
+  - pointName: 
+    point: {fileID: 5175290951189782320}
+    patrolType: 0
+    holdTime: 0
+  - pointName: 
+    point: {fileID: 4317672255523598360}
+    patrolType: 0
+    holdTime: 0
+  - pointName: End
+    point: {fileID: 3257072839462100019}
+    patrolType: 0
+    holdTime: 0
 --- !u!195 &8048677406567219515
 NavMeshAgent:
   m_ObjectHideFlags: 0
