@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     public float mouseSensitivity = 2.0f;
     [SerializeField]
     private float currentSpeed;
+    public float swimSpeed = 3f;
+    public float swimUpForce = 3f;
 
     [Header("Crouch Settings")]
     public float crouchHeight = 1.0f;
@@ -24,12 +26,20 @@ public class Player : MonoBehaviour
     private CapsuleCollider playerCollider;
     private Animator anim;
 
+    private bool isGrounded;
+    private bool isSwimming = false;
+    private bool isSprinting = false;
+    private bool isCrouching = false;
+    private bool isJumpPressed = false;
+
     private Vector2 moveInput;
     private Vector2 lookInput;
-    private bool isJumpPressed;
-    private bool isGrounded;
-    private bool isSprinting;
-    private bool isCrouching;
+    private bool jumpInput;
+    private bool sprintInput;
+    private bool crouchInput;
+    private bool swimUpInput;
+    private bool swimDownInput;
+
 
     void Start()
     {
@@ -45,9 +55,17 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        HandleMovement();
-        HandleJumping();
         HandleMouseLook();
+
+        if (isSwimming)
+        {
+            HandleSwimming();
+        }
+        else
+        {
+            HandleMovement();
+            HandleJumping();
+        }
     }
 
     void HandleMovement()
@@ -104,6 +122,40 @@ public class Player : MonoBehaviour
         }
     }
 
+    void HandleSwimming()
+    {
+        float xInput = moveInput.x;
+        float zInput = moveInput.y;
+        float yInput = 0f;
+
+        if (isJumpPressed) yInput += 1f;
+        if (isCrouching) yInput -= 1f;
+
+        Vector3 swimDirection = new Vector3(xInput, yInput, zInput).normalized;
+        rb.velocity = transform.TransformDirection(swimDirection) * swimSpeed;
+        anim.SetFloat("SpeedFB", moveInput.y);
+        anim.SetFloat("SpeedLR", moveInput.x);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            isSwimming = true;
+            rb.useGravity = false;
+            rb.velocity = Vector3.zero; // Reset velocity when entering water
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            isSwimming = false;
+            rb.useGravity = true;
+        }
+    }
+
     void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -141,14 +193,7 @@ public class Player : MonoBehaviour
 
     public void OnSprint(InputValue value)
     {
-        if (value.isPressed)
-        {
-            isSprinting = true;
-        }
-        else
-        {
-            isSprinting = false;
-        }
+        isSprinting = value.isPressed;
     }
 
     public void OnCrouch(InputValue value)
@@ -164,6 +209,18 @@ public class Player : MonoBehaviour
             isCrouching = false;
             playerCollider.height = originalHeight;
             transform.position += new Vector3(0, (originalHeight - crouchHeight) / 2, 0); // Reset position
+        }
+    }
+
+    public void OnAttack(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            anim.SetTrigger("Attack");
+        }
+        else
+        {
+            anim.ResetTrigger("Attack");
         }
     }
 }
