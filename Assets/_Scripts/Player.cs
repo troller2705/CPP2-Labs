@@ -145,6 +145,14 @@ public class Player : MonoBehaviour
             rb.useGravity = false;
             rb.velocity = Vector3.zero; // Reset velocity when entering water
         }
+        if (other.CompareTag("Finish"))
+        {
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #else
+                Application.Quit();
+            #endif
+        }
     }
 
     void OnTriggerExit(Collider other)

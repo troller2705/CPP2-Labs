@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 6494611342968313481}
   - component: {fileID: 1710627919660118339}
   - component: {fileID: 3741594584965419428}
+  - component: {fileID: 2211652831302257343}
   m_Layer: 0
   m_Name: Water
   m_TagString: Water
@@ -156,3 +157,16 @@ MonoBehaviour:
   TileSize: 1
   ShowDebug: 1
   RealtimeUpdates: 0
+--- !u!114 &2211652831302257343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8222596786924051054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf39edffa406b4d4c8db438c744f592a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaterVolume: {fileID: 3741594584965419428}

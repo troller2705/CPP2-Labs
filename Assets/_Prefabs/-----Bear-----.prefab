@@ -281,7 +281,7 @@ MonoBehaviour:
   chaseSpeed: 4
   detectionRange: 10
   attackRange: 2
-  attackCooldown: 2
+  attackCooldown: 1.5
   patrolPoints:
   - pointName: Start
     point: {fileID: 3671250680151661911}
