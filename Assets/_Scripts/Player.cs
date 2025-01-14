@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
         Cursor.visible = false;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
         HandleMouseLook();
 
