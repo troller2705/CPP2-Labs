@@ -3657,18 +3657,6 @@ PrefabInstance:
       value: DesertCave
       objectReference: {fileID: 0}
     - target: {fileID: 7938460305942363815, guid: de6e5a8dda092e64aa197e2a79b69e5b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7938460305942363815, guid: de6e5a8dda092e64aa197e2a79b69e5b, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7938460305942363815, guid: de6e5a8dda092e64aa197e2a79b69e5b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7938460305942363815, guid: de6e5a8dda092e64aa197e2a79b69e5b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -66.513664
       objectReference: {fileID: 0}
@@ -4928,14 +4916,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 173173986716981794, guid: 4bfcba2dc52ebb645ba74987cc154fa7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 173173986716981794, guid: 4bfcba2dc52ebb645ba74987cc154fa7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1401636711944793063, guid: 4bfcba2dc52ebb645ba74987cc154fa7, type: 3}
       propertyPath: m_Name
       value: -----Player Container-----
@@ -4979,10 +4959,6 @@ PrefabInstance:
     - target: {fileID: 5280812385302276911, guid: 4bfcba2dc52ebb645ba74987cc154fa7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8367074135426961687, guid: 4bfcba2dc52ebb645ba74987cc154fa7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.32
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5103,10 +5079,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6494611342968313481, guid: ddd53afd1c3e87840a3e0f59e577e80b, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 008541be8ad8b3f42a5318e1c4a73d1c, type: 2}
     - target: {fileID: 8222596786924051054, guid: ddd53afd1c3e87840a3e0f59e577e80b, type: 3}
       propertyPath: m_Name
       value: Water
