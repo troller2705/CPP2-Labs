@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
     private void FixedUpdate()
     {
         HandleCamera();
-
+        anim.SetBool("isSwimming", isSwimming);
         if (isSwimming)
         {
             HandleSwimming();
