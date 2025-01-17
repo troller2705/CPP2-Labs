@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
@@ -6,16 +7,29 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
     [Header("Player Movement Settings")]
     private CharacterController cc;
     private ThirdPersonInputs inputs;
+    private Animator anim;
 
     private Vector2 direction;
     private Vector3 velocity;
-    private bool isJumpPressed = false;
-
-    public float speed = 5.0f;
+    
+    public float normSpeed = 5.0f;
+    public float sprintSpeed = 7.0f;
+    public float crouchSpeed = 2.5f;
+    public float curSpeed;
     public float jumpForce = 8.0f;   // Increased jump force
-    public float gravity = -20.0f;   // Stronger gravity
+    private float gravity = -20.0f;   // Static gravity
+
+    public float swimSpeed = 3f;
+    public float swimUpForce = 3f;
 
     private bool isGrounded;
+    private bool isSwimming = false;
+    private bool isJumpPressed = false;
+    private bool isAttackPressed = false;
+    private bool isInteractPressed = false;
+    private bool isCrouchPressed = false;
+    private bool isSprintToggled = false;
+    private bool isCrouchToggled = false;
 
     [Header("Camera Settings")]
     public Transform cameraTarget;
@@ -51,15 +65,26 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
     void Start()
     {
         cc = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        curSpeed = normSpeed;
     }
 
     private void FixedUpdate()
     {
-        HandleMovement();
         HandleCamera();
+
+        if (isSwimming)
+        {
+            HandleSwimming();
+        }
+        else
+        {
+            HandleMovement();
+        }
     }
 
     private void HandleMovement()
@@ -69,23 +94,44 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;  // Keeps the player grounded
+            anim.ResetTrigger("Jump");
+            anim.SetBool("isGrounded", isGrounded);
         }
 
         // Movement input
         Vector3 moveDirection = new Vector3(direction.x, 0, direction.y);
         moveDirection = Quaternion.Euler(0, yaw, 0) * moveDirection;
-        cc.Move(moveDirection * speed * Time.fixedDeltaTime);
+        cc.Move(moveDirection * curSpeed * Time.fixedDeltaTime);
 
         // Jumping
         if (isJumpPressed && isGrounded)
         {
             velocity.y = jumpForce;
+            anim.SetTrigger("Jump");
         }
 
         // Apply gravity
         velocity.y += gravity * Time.fixedDeltaTime;
 
         cc.Move(velocity * Time.fixedDeltaTime);
+        anim.SetFloat("SpeedFB", direction.y);
+        anim.SetFloat("SpeedLR", direction.x);
+    }
+
+    void HandleSwimming()
+    {
+        float xInput = direction.x;
+        float zInput = direction.y;
+        float yInput = 0f;
+
+        if (isJumpPressed) yInput += swimUpForce;
+        if (isCrouchPressed) yInput -= swimUpForce;
+
+        Vector3 swimDirection = new Vector3(xInput, yInput, zInput).normalized;
+        swimDirection = Quaternion.Euler(0, yaw, 0) * swimDirection;
+        cc.Move(swimDirection * swimSpeed * Time.fixedDeltaTime);
+        anim.SetFloat("SpeedFB", direction.y);
+        anim.SetFloat("SpeedLR", direction.x);
     }
 
     private void HandleCamera()
@@ -125,11 +171,72 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
 
     public void OnCrouch(InputAction.CallbackContext context)
     {
-        // Implement crouch logic here
+        if (isSwimming)
+        {
+            isCrouchPressed = context.ReadValueAsButton();
+        }
+        else
+        {
+            isCrouchToggled = !isCrouchToggled;
+        }
+        
     }
 
     public void OnSprint(InputAction.CallbackContext context)
     {
-        // Implement sprint logic here
+        isSprintToggled = !isSprintToggled;
+        anim.SetBool("isSprinting", isSprintToggled);
+
+        if (isSprintToggled)
+        {
+            curSpeed = sprintSpeed;
+        }
+        else
+        {
+            curSpeed = normSpeed;
+        }
+    }
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        isAttackPressed = context.ReadValueAsButton();
+        if (isAttackPressed)
+        {
+            anim.SetTrigger("Attack");
+        }
+        else
+        {
+            anim.ResetTrigger("Attack");
+        }
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        isInteractPressed = context.ReadValueAsButton();
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            isSwimming = true;
+            cc.Move(Vector3.zero); // Reset velocity when entering water
+        }
+        if (other.CompareTag("Finish"))
+        {
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #else
+                Application.Quit();
+            #endif
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            isSwimming = false;
+        }
     }
 }

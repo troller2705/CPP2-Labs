@@ -1491,7 +1491,6 @@ GameObject:
   m_Component:
   - component: {fileID: 173173986716981794}
   - component: {fileID: 2848300328987738487}
-  - component: {fileID: 5857900362276448982}
   - component: {fileID: 5843392451880812501}
   - component: {fileID: 4307378007757337806}
   - component: {fileID: 8070097244098107346}
@@ -1541,28 +1540,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5857900362276448982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 2172488143802746328, guid: 8b0b300587ecd0e45b65239354ab638b, type: 3}
-  m_PrefabInstance: {fileID: 4525262471279740114}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2340096361285411909}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 780a5560c6ad40748b2c6e41914596d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 5
-  sprintSpeed: 10
-  crouchSpeed: 2.5
-  jumpForce: 5
-  mouseSensitivity: 1
-  currentSpeed: 0
-  swimSpeed: 3
-  swimUpForce: 3
-  crouchHeight: 1
-  cameraTransform: {fileID: 0}
 --- !u!136 &5843392451880812501
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1626,10 +1603,10 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.938433
+  m_Height: 1.7
   m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_SlopeLimit: 60
+  m_StepOffset: 1
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.9151012, z: 0}
