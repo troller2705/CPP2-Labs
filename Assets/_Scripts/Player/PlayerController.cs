@@ -124,8 +124,9 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
         float zInput = direction.y;
         float yInput = 0f;
 
-        if (isJumpPressed) yInput += swimUpForce;
+        if (isJumpPressed && transform.position.y < -3) yInput += swimUpForce;
         if (isCrouchPressed) yInput -= swimUpForce;
+        if (transform.position.y > -3) yInput -= swimUpForce; 
 
         Vector3 swimDirection = new Vector3(xInput, yInput, zInput).normalized;
         swimDirection = Quaternion.Euler(0, yaw, 0) * swimDirection;
