@@ -31,6 +31,10 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
     private bool isSprintToggled = false;
     private bool isCrouchToggled = false;
 
+    [Header("Weapon Variables")]
+    [SerializeField] private Transform weaponAttachPoint;
+    Weapon weapon = null;
+
     [Header("Camera Settings")]
     public Transform cameraTarget;
     public Transform cameraTransform;
@@ -231,7 +235,12 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
 
     public void OnDrop(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        if (weapon)
+        {
+            weapon.Drop(GetComponent<Collider>(), transform.forward);
+            weapon = null;
+            anim.SetBool("Weapon", false);
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -262,6 +271,16 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         OnControllerColliderHitInternal?.Invoke(GetComponent<Collider>(), hit);
+
+        if (isInteractPressed)
+        {
+            if (hit.collider.CompareTag("Weapon") && weapon == null)
+            {
+                weapon = hit.gameObject.GetComponent<Weapon>();
+                weapon.Equip(GetComponent<Collider>(), weaponAttachPoint);
+                anim.SetBool("Weapon", true);
+            }
+        }
     }
 
     public void RestartGame()

@@ -1,3 +1,4 @@
+
 using System.Collections;
 using UnityEngine;
 
@@ -7,26 +8,47 @@ public class Weapon : MonoBehaviour
     Rigidbody rb;
     BoxCollider bc;
 
-    // Start is called before the first frame update
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         bc = GetComponent<BoxCollider>();
-    }
-    
-    public void Equip(Collider player, Transform attachPoint)
-    {
-        rb.isKinematic = true;
-        bc.isTrigger = true;
-        transform.SetParent(attachPoint);
-        transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        PlayerController.OnControllerColliderHitInternal += OnPlayerControllerHit;
     }
 
-    public void Drop(Collider player, Transform playerForward)
+    void OnPlayerControllerHit(Collider playerCollider, ControllerColliderHit thingThatHitPlayer)
     {
-        transform.parent = null;
+        Debug.Log($"Player has been hit by {thingThatHitPlayer.collider.name}");
+    }
+
+    public void Equip(Collider playerCollider, Transform weaponAttachPoint)
+    {
         rb.isKinematic = true;
         bc.isTrigger = true;
-        //rb.AddForce(playerForward. * 10.0f, ForceMode.Impulse);
+        transform.SetParent(weaponAttachPoint);
+        transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        Physics.IgnoreCollision(playerCollider, bc);
+    }
+
+    public void Drop(Collider playerCollider, Vector3 playerForward)
+    {
+        transform.parent = null;
+        rb.isKinematic = false;
+        bc.isTrigger = false;
+        rb.AddForce(playerForward * 10.0f, ForceMode.Impulse);
+        StartCoroutine(DropCooldown(playerCollider));
+    }
+
+    IEnumerator DropCooldown(Collider playerCollider)
+    {
+        yield return new WaitForSeconds(3);
+
+        //happens after cooldown
+        Physics.IgnoreCollision(bc, playerCollider, false);
+    }
+    // Update is called once per frame
+    void Update()
+    {
+
     }
 }
