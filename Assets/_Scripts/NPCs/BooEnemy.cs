@@ -3,8 +3,9 @@ using UnityEngine;
 public class BooEnemy : MonoBehaviour
 {
     [Header("Player Detection and Chasing")]
-    public Transform player;
+    private Transform player;
     public float detectionRange = 10f; // Distance at which the Boo detects the player
+    public float fireRange = 10f; // Distance at which the Boo fires at the player
     public float moveSpeed = 3f;       // Movement speed when chasing
     public float stoppingDistance = 1.5f; // How close the Boo gets to the player
 
@@ -28,6 +29,7 @@ public class BooEnemy : MonoBehaviour
     {
         booRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         anim = GetComponentInChildren<Animator>();
+        player = GameObject.FindWithTag("Player").gameObject.GetComponent<Transform>();
     }
 
     void Update()
@@ -97,8 +99,10 @@ public class BooEnemy : MonoBehaviour
 
     private void HandleFireballAttack()
     {
+        float distanceToPlayer = Vector3.Distance(player.position, transform.position);
+
         // Only attack if the player is within detection range
-        if (isChasing && Time.time >= nextFireTime)
+        if (isChasing && (Time.time >= nextFireTime) && distanceToPlayer <= fireRange)
         {
             nextFireTime = Time.time + fireRate;
             anim.SetTrigger("SpellCast");

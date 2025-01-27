@@ -4749,11 +4749,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1356381714199472493, guid: a5344b98eb8749b48bd7eff8a8c3adae, type: 3}
   m_PrefabInstance: {fileID: 1716641264}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &2088924110 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1029796736580276977, guid: ff868b2d18fcadc42884562659daa469, type: 3}
-  m_PrefabInstance: {fileID: 7541721664372500139}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2109470714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4921,10 +4916,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 313654240989404084, guid: a92b77bdcda1cea499d27afaaba4169a, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 2088924110}
     - target: {fileID: 4337274678517663514, guid: a92b77bdcda1cea499d27afaaba4169a, type: 3}
       propertyPath: m_Name
       value: Magician_RIO
