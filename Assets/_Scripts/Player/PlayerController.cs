@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
     private Vector3 currentRotation;
     private Vector3 rotationSmoothVelocity;
 
+    public static event Action<Collider, ControllerColliderHit> OnControllerColliderHitInternal;
+
     void Awake()
     {
         inputs = new ThirdPersonInputs();
@@ -67,10 +69,21 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
         cc = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         curSpeed = normSpeed;
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if (focus)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     private void FixedUpdate()
@@ -216,6 +229,11 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
         isInteractPressed = context.ReadValueAsButton();
     }
 
+    public void OnDrop(InputAction.CallbackContext context)
+    {
+        throw new System.NotImplementedException();
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Water"))
@@ -239,6 +257,11 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
         {
             isSwimming = false;
         }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        OnControllerColliderHitInternal?.Invoke(GetComponent<Collider>(), hit);
     }
 
     public void RestartGame()

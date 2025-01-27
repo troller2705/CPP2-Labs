@@ -629,7 +629,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1029796736580276977}
   - component: {fileID: 7799526632432744131}
-  - component: {fileID: 6692088872525491439}
   - component: {fileID: 1432828587481349779}
   - component: {fileID: 6933318825211186880}
   m_Layer: 0
@@ -647,7 +646,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 958251614409857720}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.63, y: 0.01, z: -23.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -679,29 +678,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &6692088872525491439
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 958251614409857720}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.9384329
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.9151012, z: 0}
 --- !u!114 &1432828587481349779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -746,13 +722,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.7
+  m_Height: 1.82
   m_Radius: 0.5
   m_SlopeLimit: 60
   m_StepOffset: 1
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.9151012, z: 0}
+  m_Center: {x: 0, y: 0.92, z: 0}
 --- !u!1 &1014473154873193667
 GameObject:
   m_ObjectHideFlags: 0

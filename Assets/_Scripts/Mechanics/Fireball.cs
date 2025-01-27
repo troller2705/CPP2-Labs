@@ -7,17 +7,23 @@ public class Fireball : MonoBehaviour
     void Start()
     {
         Destroy(gameObject, lifespan); // Destroy fireball after lifespan expires
+        PlayerController.OnControllerColliderHitInternal += OnPlayerControllerHit;
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnPlayerControllerHit(Collider playerCollider, ControllerColliderHit hit)
     {
-        if (other.CompareTag("Player"))
+        if (playerCollider.CompareTag("Player") && hit.collider.name == gameObject.name)
         {
-            PlayerController playerController = other.GetComponent<PlayerController>();
+            PlayerController playerController = playerCollider.GetComponent<PlayerController>();
             if (playerController != null)
             {
                 playerController.RestartGame();
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        PlayerController.OnControllerColliderHitInternal -= OnPlayerControllerHit;
     }
 }
