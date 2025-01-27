@@ -240,4 +240,10 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
             isSwimming = false;
         }
     }
+
+    public void RestartGame()
+    {
+        // Restarts the current scene
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+    }
 }
