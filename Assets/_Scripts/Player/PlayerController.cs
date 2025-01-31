@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
 {
+    #region Variables
     [Header("Player Movement Settings")]
     private CharacterController cc;
     private ThirdPersonInputs inputs;
@@ -31,9 +32,15 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
     private bool isSprintToggled = false;
     private bool isCrouchToggled = false;
 
-    [Header("Weapon Variables")]
+    [Header("Weapon/Inventory Variables")]
     [SerializeField] private Transform weaponAttachPoint;
     Weapon weapon = null;
+    public GameObject fireballPrefab;
+    public Transform fireballSpawnPoint;
+    public float fireballSpeed = 10f;
+    public float fireRate = 2f; // Time between fireballs
+    private int equippedItem = 0;
+    private int inventorySize = 2;
 
     [Header("Camera Settings")]
     public Transform cameraTarget;
@@ -50,7 +57,8 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
     private Vector3 rotationSmoothVelocity;
 
     public static event Action<Collider, ControllerColliderHit> OnControllerColliderHitInternal;
-
+    #endregion
+    #region Basic Calls(Start/Update/Awake)
     void Awake()
     {
         inputs = new ThirdPersonInputs();
@@ -103,7 +111,8 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
             HandleMovement();
         }
     }
-
+    #endregion
+    #region Handlers
     private void HandleMovement()
     {
         isGrounded = cc.isGrounded;
@@ -169,8 +178,8 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
 
         transform.rotation = Quaternion.Euler(0, yaw, 0);
     }
-
-    // Input Callbacks
+    #endregion
+    #region Input Callbacks
     public void OnJump(InputAction.CallbackContext context)
     {
         isJumpPressed = context.ReadValueAsButton();
@@ -226,6 +235,10 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
         {
             anim.ResetTrigger("Attack");
         }
+        if (equippedItem == 1)
+        {
+            ShootFireball();
+        }
     }
 
     public void OnInteract(InputAction.CallbackContext context)
@@ -239,10 +252,23 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
         {
             weapon.Drop(GetComponent<Collider>(), transform.forward);
             weapon = null;
+            inventorySize--;
             anim.SetBool("Weapon", false);
         }
     }
 
+    public void OnItemSwap(InputAction.CallbackContext context)
+    {
+        if (context.canceled) return;
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.canceled) return;
+        PauseGame();
+    }
+    #endregion
+    #region Collition Handlers
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Water"))
@@ -278,14 +304,30 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
             {
                 weapon = hit.gameObject.GetComponent<Weapon>();
                 weapon.Equip(GetComponent<Collider>(), weaponAttachPoint);
-                anim.SetBool("Weapon", true);
+                inventorySize++;
+                //anim.SetBool("Weapon", true);
             }
         }
     }
+    #endregion
 
     public void RestartGame()
     {
         // Restarts the current scene
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void PauseGame()
+    {
+        inputs.Player.Disable();
+    }
+
+    private void ShootFireball()
+    {
+        GameObject fireball = Instantiate(fireballPrefab, fireballSpawnPoint.position, Quaternion.identity);
+        fireball.GetComponent<Fireball>().casterTag = gameObject.tag;
+        Rigidbody rb = fireball.GetComponent<Rigidbody>();
+        Vector3 direction = (gameObject.transform.forward - fireballSpawnPoint.position).normalized;
+        rb.velocity = direction * fireballSpeed;
     }
 }

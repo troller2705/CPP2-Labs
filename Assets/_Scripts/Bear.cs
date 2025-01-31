@@ -1,9 +1,9 @@
+using System.Net.Mail;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Bear : MonoBehaviour
 {
-    #region Variables
     public enum Type { Patrol, Gather, Sleep }
 
     [System.Serializable]
@@ -21,7 +21,6 @@ public class Bear : MonoBehaviour
     public float detectionRange = 10f;
     public float attackRange = 2f;
     public float attackCooldown = 2f;
-    private int health = 5;
 
     [Header("Patrol Settings")]
     public PatrolPoint[] patrolPoints;
@@ -35,8 +34,7 @@ public class Bear : MonoBehaviour
 
     private enum State { Idle, Patrolling, Chasing, Attacking, Dead }
     private State currentState = State.Idle;
-    #endregion
-    #region Basic Calls(Start/Update/Awake)
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -76,8 +74,7 @@ public class Bear : MonoBehaviour
 
         DetectPlayer();
     }
-    #endregion
-    #region Handles
+
     void HandleIdle()
     {
         if (player != null && Vector3.Distance(transform.position, player.position) <= detectionRange)
@@ -139,21 +136,6 @@ public class Bear : MonoBehaviour
         }
     }
 
-    public void HandleDamage(int damage)
-    {
-        Debug.Log($"Bear Hit");
-        if (health > 0)
-        {
-            health -= damage;
-            animator.SetTrigger("Get Hit Front");
-        }
-        else
-        {
-            Die();
-        }
-    }
-    #endregion
-    #region States
     void DetectPlayer()
     {
         if (player == null) return;
@@ -193,18 +175,21 @@ public class Bear : MonoBehaviour
         }
     }
 
+    void UpdateAnimation()
+    {
+        animator.SetBool("WalkForward", currentState == State.Patrolling);
+        animator.SetBool("RunForward", currentState == State.Chasing);
+        animator.SetBool("Combat Idle", currentState == State.Attacking);
+    }
+
     public void Die()
     {
         currentState = State.Dead;
         animator.SetBool("Death", true);
         agent.isStopped = true;
-        Debug.Log($"{gameObject.name} has died.");
-        for (int i = 0; i < 2; i++)
-        { }
-        Destroy(gameObject);
+        Debug.Log("Enemy has died.");
     }
-    #endregion
-    #region Utils
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
@@ -213,12 +198,4 @@ public class Bear : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
-
-    void UpdateAnimation()
-    {
-        animator.SetBool("WalkForward", currentState == State.Patrolling);
-        animator.SetBool("RunForward", currentState == State.Chasing);
-        animator.SetBool("Combat Idle", currentState == State.Attacking);
-    }
-    #endregion
 }

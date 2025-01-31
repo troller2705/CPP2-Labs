@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class BooEnemy : MonoBehaviour
 {
+    #region Variables
     [Header("Player Detection and Chasing")]
     private Transform player;
     public float detectionRange = 10f; // Distance at which the Boo detects the player
@@ -18,13 +19,16 @@ public class BooEnemy : MonoBehaviour
     [Header("Visibility Settings")]
     public float visibilityAngle = 45f; // Angle within which Boo is visible to the player
 
+    [Header("Enemy Settings")]
+    private int health = 2;
 
     private SkinnedMeshRenderer booRenderer;
     private Animator anim;
     private float nextFireTime;
 
     private bool isChasing = false;
-
+    #endregion
+    #region Basic Calls(Start/Update/Awake)
     void Start()
     {
         booRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
@@ -50,7 +54,8 @@ public class BooEnemy : MonoBehaviour
         HandleChasing();
         HandleFireballAttack();
     }
-
+    #endregion
+    #region Handlers
     private void HandleVisibility()
     {
         // Vector from Boo to the player
@@ -112,11 +117,34 @@ public class BooEnemy : MonoBehaviour
         }
     }
 
+    public void HandleDamage(int damage)
+    {
+        Debug.Log($"Boo Hit");
+        if (health > 0)
+        {
+            health -= damage;
+            anim.SetTrigger("Hit");
+        }
+        else
+        {
+            Die();
+        }
+    }
+    #endregion
+
     private void ShootFireball()
     {
         GameObject fireball = Instantiate(fireballPrefab, fireballSpawnPoint.position, Quaternion.identity);
+        fireball.GetComponent<Fireball>().casterTag = gameObject.tag;
         Rigidbody rb = fireball.GetComponent<Rigidbody>();
         Vector3 direction = (player.position - fireballSpawnPoint.position).normalized;
         rb.velocity = direction * fireballSpeed;
+    }
+
+    public void Die()
+    {
+        anim.SetBool("Death", true);
+        Debug.Log($"{gameObject.name} has died.");
+        Destroy(gameObject);
     }
 }
