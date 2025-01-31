@@ -132,6 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 72895573}
   - component: {fileID: 72895574}
+  - component: {fileID: 72895575}
   m_Layer: 0
   m_Name: -----Menus-----
   m_TagString: Untagged
@@ -171,6 +172,22 @@ MonoBehaviour:
   startButton: {fileID: 1439138160}
   settingsButton: {fileID: 711903480}
   quitButton: {fileID: 110145650}
+--- !u!114 &72895575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72895571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f736e0d669e7b574a8eec8e55cd46aa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allMenus:
+  - {fileID: 463071828}
+  - {fileID: 571927251}
+  initState: 0
 --- !u!1 &110145648
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,7 +922,7 @@ RectTransform:
   m_Father: {fileID: 1370419934}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1238,7 +1255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &463071824
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1549,7 +1566,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &571927247
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1649,14 +1666,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  mixer: {fileID: 0}
+  mixer: {fileID: 24100000, guid: 113491b6b4ae7794abc808fcefea9e4f, type: 2}
   backButton: {fileID: 1593778076}
-  masterVolSlider: {fileID: 0}
-  masterVolSliderText: {fileID: 0}
-  musicVolSlider: {fileID: 0}
-  musicVolSliderText: {fileID: 0}
-  sfxVolSlider: {fileID: 0}
-  sfxVolSliderText: {fileID: 0}
+  masterVolSlider: {fileID: 200623174}
+  masterVolSliderText: {fileID: 2115441658}
+  musicVolSlider: {fileID: 1387410173}
+  musicVolSliderText: {fileID: 878884760}
+  sfxVolSlider: {fileID: 957824197}
+  sfxVolSliderText: {fileID: 121834840}
 --- !u!222 &571927252
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2492,7 +2509,7 @@ RectTransform:
   m_Father: {fileID: 139912772}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2567,7 +2584,7 @@ RectTransform:
   m_Father: {fileID: 1086275650}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2642,7 +2659,7 @@ RectTransform:
   m_Father: {fileID: 2119562883}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3002,7 +3019,7 @@ RectTransform:
   m_Father: {fileID: 1504008403}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3486,7 +3503,7 @@ RectTransform:
   m_Father: {fileID: 1547410612}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

@@ -44,6 +44,11 @@ public class NewMenuController : MonoBehaviour, ThirdPersonInputs.IUIActions
     void Start()
     {
         buttons = new Button[] { startButton, settingsButton, quitButton };
+
+        startButton.onClick.AddListener(StartGame);
+        settingsButton.onClick.AddListener(OpenSettings);
+        quitButton.onClick.AddListener(QuitGame);
+
         HandleSelectButton(0);
     }
     #endregion
