@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
     public float fireballSpeed = 10f;
     public float fireRate = 2f; // Time between fireballs
     private int equippedItem = 0;
-    private int inventorySize = 2;
+    private int inventorySize = 1;
 
     [Header("Camera Settings")]
     public Transform cameraTarget;
@@ -259,12 +259,12 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
 
     public void OnItemSwap(InputAction.CallbackContext context)
     {
-        if (context.canceled) return;
+        if (!context.performed) return;
     }
 
     public void OnPause(InputAction.CallbackContext context)
     {
-        if (context.canceled) return;
+        if (!context.performed) return;
         PauseGame();
     }
     #endregion
