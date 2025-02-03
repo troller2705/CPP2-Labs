@@ -99,7 +99,10 @@ public class BooEnemy : MonoBehaviour
                 anim.SetFloat("SpeedFB", 1);
             }
         }
-        anim.SetFloat("SpeedFB", 0);
+        else
+        {
+            anim.SetFloat("SpeedFB", 0);
+        }
     }
 
     private void HandleFireballAttack()
