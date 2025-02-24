@@ -1,3 +1,6 @@
+using NUnit.Framework;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -35,6 +38,8 @@ public class Bear : MonoBehaviour
 
     private enum State { Idle, Patrolling, Chasing, Attacking, Dead }
     private State currentState = State.Idle;
+
+    public List<GameObject> drops;
     #endregion
     #region Basic Calls(Start/Update/Awake)
     void Start()
@@ -199,8 +204,15 @@ public class Bear : MonoBehaviour
         animator.SetBool("Death", true);
         agent.isStopped = true;
         Debug.Log($"{gameObject.name} has died.");
-        for (int i = 0; i < 2; i++)
-        { }
+        if (drops != null)
+        {
+            // Randomly pick a collectible from the list
+            int randomIndex = Random.Range(0, drops.Count);
+            GameObject collectible = drops[randomIndex];
+
+            // Instantiate the collectible at the current spawn point
+            Instantiate(collectible, gameObject.transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
     }
     #endregion
@@ -221,4 +233,11 @@ public class Bear : MonoBehaviour
         animator.SetBool("Combat Idle", currentState == State.Attacking);
     }
     #endregion
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<Weapon>())
+        {
+            HandleDamage(other.GetComponent<Weapon>().damage);
+        }
+    }
 }

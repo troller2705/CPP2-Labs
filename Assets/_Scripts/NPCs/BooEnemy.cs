@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BooEnemy : MonoBehaviour
@@ -27,6 +28,8 @@ public class BooEnemy : MonoBehaviour
     private float nextFireTime;
 
     private bool isChasing = false;
+
+    public List<GameObject> drops;
     #endregion
     #region Basic Calls(Start/Update/Awake)
     void Start()
@@ -148,6 +151,23 @@ public class BooEnemy : MonoBehaviour
     {
         anim.SetBool("Death", true);
         Debug.Log($"{gameObject.name} has died.");
+        if(drops != null)
+        {
+            // Randomly pick a collectible from the list
+            int randomIndex = Random.Range(0, drops.Count);
+            GameObject collectible = drops[randomIndex];
+
+            // Instantiate the collectible at the current spawn point
+            Instantiate(collectible, gameObject.transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<Weapon>())
+        {
+            HandleDamage(other.GetComponent<Weapon>().damage);
+        }
     }
 }

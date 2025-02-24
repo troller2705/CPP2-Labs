@@ -298,6 +298,7 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
     {
         OnControllerColliderHitInternal?.Invoke(GetComponent<Collider>(), hit);
 
+
         if (isInteractPressed)
         {
             if (hit.collider.CompareTag("Weapon") && weapon == null)
@@ -305,7 +306,11 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
                 weapon = hit.gameObject.GetComponent<Weapon>();
                 weapon.Equip(GetComponent<Collider>(), weaponAttachPoint);
                 inventorySize++;
-                //anim.SetBool("Weapon", true);
+                anim.SetBool("Weapon", true);
+            }
+            if (hit.collider.CompareTag("Coin"))
+            {
+                hit.gameObject.GetComponent<Pickup>().PickupCoin();
             }
         }
     }

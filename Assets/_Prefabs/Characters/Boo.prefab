@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5228633572098111309}
   - component: {fileID: 313654240989404084}
+  - component: {fileID: 3859118140006837752}
   m_Layer: 0
   m_Name: Boo
   m_TagString: Enemy
@@ -47,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRange: 10
-  fireRange: 10
+  fireRange: 5
   moveSpeed: 3
   stoppingDistance: 1.5
   fireballPrefab: {fileID: 2085022966197552284, guid: d4f699a812a815e46bb0540cddb4498b, type: 3}
@@ -55,6 +56,33 @@ MonoBehaviour:
   fireballSpeed: 10
   fireRate: 2
   visibilityAngle: 45
+  drops:
+  - {fileID: 1708572530373918, guid: 7a2779ade01fd66408496e7b0995223d, type: 3}
+  - {fileID: 1401821474702656, guid: 4ade72abb4a042c4288244515651795c, type: 3}
+  - {fileID: 1498403948531744, guid: 0d0a76f5f37f8b149b3137696f52e987, type: 3}
+--- !u!136 &3859118140006837752
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4337274678517663514}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &8019613501312480416
 GameObject:
   m_ObjectHideFlags: 0
