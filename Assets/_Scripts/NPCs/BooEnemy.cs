@@ -41,21 +41,24 @@ public class BooEnemy : MonoBehaviour
 
     void Update()
     {
-        float distanceToPlayer = Vector3.Distance(player.position, transform.position);
-
-        // Check if the player is within detection range
-        if (distanceToPlayer <= detectionRange)
+        if (health > 0)
         {
-            isChasing = true; // Start chasing the player
-        }
-        else
-        {
-            isChasing = false; // Stop chasing when out of range
-        }
+            float distanceToPlayer = Vector3.Distance(player.position, transform.position);
 
-        HandleVisibility();
-        HandleChasing();
-        HandleFireballAttack();
+            // Check if the player is within detection range
+            if (distanceToPlayer <= detectionRange)
+            {
+                isChasing = true; // Start chasing the player
+            }
+            else
+            {
+                isChasing = false; // Stop chasing when out of range
+            }
+
+            HandleVisibility();
+            HandleChasing();
+            HandleFireballAttack();
+        }
     }
     #endregion
     #region Handlers
