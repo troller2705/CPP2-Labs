@@ -213,7 +213,7 @@ public class Bear : MonoBehaviour
             // Instantiate the collectible at the current spawn point
             Instantiate(collectible, gameObject.transform.position, Quaternion.identity);
         }
-        Destroy(gameObject);
+        Destroy(gameObject, 5);
     }
     #endregion
     #region Utils

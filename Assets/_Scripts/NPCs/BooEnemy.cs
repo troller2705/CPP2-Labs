@@ -160,7 +160,7 @@ public class BooEnemy : MonoBehaviour
             // Instantiate the collectible at the current spawn point
             Instantiate(collectible, gameObject.transform.position, Quaternion.identity);
         }
-        Destroy(gameObject);
+        Destroy(gameObject, 5);
     }
 
     private void OnTriggerEnter(Collider other)
