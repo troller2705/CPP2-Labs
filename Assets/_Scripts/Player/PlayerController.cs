@@ -31,16 +31,18 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
     private bool isCrouchPressed = false;
     private bool isSprintToggled = false;
     private bool isCrouchToggled = false;
+    public bool hasWinningItem = false;
 
     [Header("Weapon/Inventory Variables")]
     [SerializeField] private Transform weaponAttachPoint;
     Weapon weapon = null;
+    Fireball fireball = null;
+    GameObject equipped = null;
     public GameObject fireballPrefab;
     public Transform fireballSpawnPoint;
     public float fireballSpeed = 10f;
     public float fireRate = 2f; // Time between fireballs
-    private int equippedItem = 0;
-    private int inventorySize = 1;
+    public int health = 100;
 
     [Header("Camera Settings")]
     public Transform cameraTarget;
@@ -227,7 +229,7 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
     public void OnAttack(InputAction.CallbackContext context)
     {
         isAttackPressed = context.ReadValueAsButton();
-        if (isAttackPressed)
+        if (isAttackPressed && equipped)
         {
             anim.SetTrigger("Attack");
         }
@@ -235,7 +237,7 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
         {
             anim.ResetTrigger("Attack");
         }
-        if (equippedItem == 1)
+        if (equipped == fireball.gameObject)
         {
             ShootFireball();
         }
@@ -252,7 +254,6 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
         {
             weapon.Drop(GetComponent<Collider>(), transform.forward);
             weapon = null;
-            inventorySize--;
             anim.SetBool("Weapon", false);
         }
     }
@@ -260,6 +261,26 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
     public void OnItemSwap(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
+        if (context.ReadValue<Vector2>().y < 0)
+        {
+            if (weapon && fireball)
+            {
+                if (equipped == weapon.gameObject)
+                {  equipped = fireball.gameObject; }
+                else
+                { equipped = weapon.gameObject; }
+            }
+        }
+        else if (context.ReadValue<Vector2>().y > 0) 
+        {
+            if (weapon && fireball)
+            {
+                if (equipped == weapon.gameObject)
+                { equipped = fireball.gameObject; }
+                else
+                { equipped = weapon.gameObject; }
+            }
+        }
     }
 
     public void OnPause(InputAction.CallbackContext context)
@@ -305,7 +326,6 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
             {
                 weapon = hit.gameObject.GetComponent<Weapon>();
                 weapon.Equip(GetComponent<Collider>(), weaponAttachPoint);
-                inventorySize++;
                 anim.SetBool("Weapon", true);
             }
             if (hit.collider.CompareTag("Coin"))
@@ -325,10 +345,12 @@ public class PlayerController : MonoBehaviour, ThirdPersonInputs.IPlayerActions
     public void PauseGame()
     {
         inputs.Player.Disable();
+        inputs.UI.Enable();
     }
 
     private void ShootFireball()
     {
+        anim.CrossFade("SpellCast_Start", 0.1f);
         GameObject fireball = Instantiate(fireballPrefab, fireballSpawnPoint.position, Quaternion.identity);
         fireball.GetComponent<Fireball>().casterTag = gameObject.tag;
         Rigidbody rb = fireball.GetComponent<Rigidbody>();

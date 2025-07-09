@@ -103,7 +103,7 @@ public partial class @ThirdPersonInputs: IInputActionCollection2, IDisposable
                     ""name"": ""Item Swap"",
                     ""type"": ""PassThrough"",
                     ""id"": ""0371b006-03dd-4337-a577-1e2e3b915009"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -342,7 +342,7 @@ public partial class @ThirdPersonInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Mouse Scroll"",
                     ""id"": ""6a79c2ae-eced-48ed-93c9-8da23cf2a40a"",
-                    ""path"": ""1DAxis"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -351,7 +351,7 @@ public partial class @ThirdPersonInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
+                    ""name"": ""Up"",
                     ""id"": ""098326d5-c4ce-45ea-ba8b-16623e284185"",
                     ""path"": ""<Mouse>/scroll/down"",
                     ""interactions"": """",
@@ -362,7 +362,7 @@ public partial class @ThirdPersonInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
+                    ""name"": ""Down"",
                     ""id"": ""9e61c4e5-7ca6-4a54-8c76-1790a23421fb"",
                     ""path"": ""<Mouse>/scroll/up"",
                     ""interactions"": """",
@@ -375,7 +375,7 @@ public partial class @ThirdPersonInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""D-Pad Left/Right"",
                     ""id"": ""08355a51-8f56-4ee4-9172-b71c48ca6c90"",
-                    ""path"": ""1DAxis"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -384,7 +384,7 @@ public partial class @ThirdPersonInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
+                    ""name"": ""Up"",
                     ""id"": ""1b413be8-3cab-4dd2-86a0-75ed49d553a1"",
                     ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
@@ -395,7 +395,7 @@ public partial class @ThirdPersonInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
+                    ""name"": ""Down"",
                     ""id"": ""81fc374d-b434-42b3-a01b-ccf0ed237554"",
                     ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",

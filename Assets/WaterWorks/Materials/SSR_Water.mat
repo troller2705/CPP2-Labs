@@ -70,7 +70,7 @@ Material:
     - _MaxCutoff: 0
     - _MaxDist: 250
     - _MaxWaveDist: 250
-    - _NormalStrength: 0.1
+    - _NormalStrength: 0.47
     - _Normal_Strength: 0.1
     - _Offset: 0.9
     - _QueueControl: 0
@@ -85,7 +85,7 @@ Material:
     - _UseFoam: 1
     - _Use_Foam: 1
     - _WaveDist: 5
-    - _WaveFrequency: 3
+    - _WaveFrequency: 1.06
     - _WaveSpeed: 0.1
     - _Wave_Speed: 2
     - _WorkflowMode: 1
